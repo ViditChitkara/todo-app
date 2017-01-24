@@ -1,0 +1,80 @@
+<form action="/add_task" method="POST">
+<input type="text" name="task" /> <br>
+<input type="submit" value="add task" />
+</form>
+
+<ul>
+	<% tasks.each do |task| %>
+	<% if task.completed %>
+<li class="strike_through">
+	<%= task.name %>
+<form  action="/task_done" method="POST">
+<input type="hidden" name="id" value="<%= task.id %>" />
+<input type="submit" value="not done" /> 
+</form>
+	<% else %>
+<li>
+	<%= task.name %>
+<form action="/task_done" method="POST">
+<input type="hidden" name="id" value="<%= task.id %>" />
+<input type="submit" value="done" /> 
+</form>
+	<% end %>
+		
+	<% if task.important %>
+<form  action="/toggle_important" method="POST">
+<input type="hidden" name="task_important" value="<%= task.id %>" />
+<input class="important" type="submit" value="important" /> 
+</form>		
+	<% else %>
+<form  action="/toggle_important" method="POST">
+<input type="hidden" name="task_important" value="<%= task.id %>" />
+<input class="notimportant" type="submit" value="not important" /> 
+</form>		
+	<% end %>
+
+<% if task.urgent %>
+<form  action="/toggle_urgent" method="POST">
+<input type="hidden" name="task_urgent" value="<%= task.id %>" />
+<input class="urgent" type="submit" value="urgent" /> 
+</form>		
+	<% else %>
+<form  action="/toggle_urgent" method="POST">
+<input type="hidden" name="task_urgent" value="<%= task.id %>" />
+<input class="noturgent" type="submit" value="not urgent" /> 
+</form>		
+	<% end %>
+	
+
+
+
+	</li>
+	<% end %>
+</ul>
+
+
+<style>
+
+.strike_through{
+	text-decoration: line-through;
+}
+
+.important{
+	background-color: rgb(255,0,0);
+}
+
+.notimportant{
+	background-color: rgb(0,0,255);
+}
+
+.noturgent{
+	background-color: #008000;
+}
+
+.urgent{
+	background-color: #FFA
+}
+
+
+
+</style>
